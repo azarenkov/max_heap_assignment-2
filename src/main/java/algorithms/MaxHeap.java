@@ -63,16 +63,26 @@ public final class MaxHeap {
     }
 
 
-    public void insert(int element) {
-        Heap[size] = element;
+    public void insert(int value) {
+        if (size >= Heap.length) {
+            System.out.println("Heap is full, cannot insert " + value);
+            return;
+        }
 
-        int current = size;
-        while (Heap[current] > Heap[parent(current)]) {
+        Heap[size] = value;
+        size++;
+        heapifyUp(size - 1);
+    }
+
+
+    private void heapifyUp(int pos) {
+        int current = pos;
+        while (current > 0 && Heap[current] > Heap[parent(current)]) {
             swap(current, parent(current));
             current = parent(current);
         }
-        size++;
     }
+
 
     public void print() {
 
@@ -94,5 +104,13 @@ public final class MaxHeap {
         Heap[0] = Heap[--size];
         maxHeapify(0);
         return popped;
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    public boolean isEmpty() {
+        return this.size == 0;
     }
 }
